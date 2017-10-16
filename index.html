@@ -2,19 +2,89 @@
 <!-- [if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif] -->
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Sentiment Analysis Tester</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-    </head>
-    <body>
-        <!--[if lt IE 7]>
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif] -->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Sentiment Analysis Tester</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+
+<body>
+    <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        <h1>Sentiment Analysis Tester.</h1>
-        
-    </body>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-1 offset-sm-1 col-md-4"></div>
+            <div class="col-sm-10 col-md-4">
+                <h2>Sentiment Analysis Tester</h1>
+            </div>
+        </div>
+        <br><br><br>
+        <div class="row">
+            <div class="col-sm-12">
+                <strong>Select number of sentences you wish to analyze:</strong>
+                <input id="numQues" type="number" min="0" max="10" disabled>
+                <button type="button" id="increase" onclick="increaseValue();">+</button>
+                <button type="button" id="decrease" onclick="decreaseValue();">-</button>
+            </div>
+        </div>
+        <form id="form" action="">
+            <div class="row">
+                <div class="col-sm-12" id="quesContainer">
+
+                </div>
+            </div>
+            <input type="submit" value="Submit now" onclick="getResponses();"/>
+        </form>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        function increaseValue() {
+            var val = parseInt($('#numQues').val());
+            if (val < 10) {
+                $('#numQues').val(val + 1);
+                $('#quesContainer').append('<div><input type="text" required="required"/><span></span><div/>');
+            }
+        }
+        function decreaseValue() {
+            var val = parseInt($('#numQues').val());
+            if (val > 0) {
+                $('#numQues').val(val - 1);
+                $('#quesContainer').children().last().remove();
+            }
+        }
+
+        function getResponses() {
+            console.log('response called');
+            var postData = {};
+            for (var index = 0; index < $('#quesContainer input').length; index++) {
+                var element = $('#quesContainer input')[index];
+                postData['q'+index]=element.value;
+            }
+            console.log(postData);
+            $.post("https://senti-api.herokuapp.com/query", postData, function (data, status) {
+                console.log(data);
+            });
+        }
+
+        $(function () {
+            $('#numQues').val(0);
+            console.log('document loaded successfully');
+            console.log($('#numQues'));
+            $('#form').submit(function (e) {
+                e.preventDefault();
+                // do your staff
+            });
+        });
+    </script>
+</body>
+
 </html>
