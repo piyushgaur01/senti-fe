@@ -1,0 +1,25 @@
+{
+  "name": "senti-fe",
+  "version": "1.0.0",
+  "description": "Front end of sentiment analysis",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/piyushgaur01/senti-fe.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/piyushgaur01/senti-fe/issues"
+  },
+  "homepage": "https://github.com/piyushgaur01/senti-fe#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2"
+  }
+}
