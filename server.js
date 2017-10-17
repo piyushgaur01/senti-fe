@@ -8,6 +8,8 @@ var port = process.env.PORT || 8080;
 // parse application/json
 app.use(bodyParser.json());
 
+app.use(express.static('public'));
+
 app.get('/', function(req,res){
     res.sendFile(path.join(__dirname + '/index.html'));
 });
