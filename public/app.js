@@ -2,7 +2,7 @@ function increaseValue() {
     var val = parseInt($('#numQues').val());
     if (val < 10) {
         $('#numQues').val(val + 1);
-        $('#quesContainer').append('<div><input type="text" style="width:50%" class="form-control" placeholder="enter sentence / phrase" required="required"/><span></span><br/><div/>');
+        $('#quesContainer').append('<div class="form-inline"><input type="text" style="width:50%" class="form-control" placeholder="enter sentence / phrase" required="required"/>&nbsp;&nbsp;<span></span><br/><br/><div/>');
     }
 }
 function decreaseValue() {
@@ -35,6 +35,18 @@ function getResponses() {
             console.log(postData);
             $.post("https://senti-api.herokuapp.com/query", postData, function (data, status) {
                 console.log(data);
+                var spanElements = $('#quesContainer span');
+                for (var index = 0; index < spanElements.length; index++) {
+                    var element = spanElements[index];
+                    console.log(element);
+                    if(data[index] >  0.5){
+                        element.innerText = 'Positive';
+                    }
+                    else{
+                        element.innerText = 'Negative';
+                    }
+                    
+                }
                 $('#myModal').modal('hide');
             });
         }
